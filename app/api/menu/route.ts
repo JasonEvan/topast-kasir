@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(bytes);
 
   // write file to public
-  const path = join(process.env.FILE_PATH_IMAGE!, "img", file.name);
+  const path = join(process.cwd(), "public/img", file.name);
   await writeFile(path, buffer);
 
   await addNewMenu({
