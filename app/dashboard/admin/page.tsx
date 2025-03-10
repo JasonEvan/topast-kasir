@@ -3,6 +3,7 @@
 import Skeleton from "@/components/Loading";
 import { AdminTable } from "@/components/Table";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { User } from "@/lib/types/type";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -19,7 +20,10 @@ export default function AdminPage() {
     })
       .then((res) => res.json())
       .then((res) => setAdmins(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => setIsLoadingFetchingData(false));
   }, []);
 

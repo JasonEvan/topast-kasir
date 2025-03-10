@@ -94,6 +94,10 @@ export async function updateStatusOrder(order_id: string, status: string) {
   });
 }
 
+export async function deleteOrder(order_id: string) {
+  await deleteDoc(doc(firestore, "orders", order_id));
+}
+
 export async function addNewMenu({
   flavour,
   description,

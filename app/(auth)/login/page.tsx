@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -38,7 +39,7 @@ export default function LoginPage() {
       router.replace("/");
     } else {
       const response = await res.json();
-      alert(response.errors);
+      errorAlert(response.errors);
     }
   };
 

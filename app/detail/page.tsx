@@ -6,6 +6,7 @@ import { useCountOrder } from "@/hooks/useCountOrderStore";
 import { useOrder } from "@/hooks/useOrderStore";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { formatter } from "@/lib/common/formatter";
+import { errorAlert, successAlert } from "@/lib/sweetalert/alert";
 import { Menu } from "@/lib/types/type";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,7 +14,7 @@ import { useEffect, useState } from "react";
 declare global {
   interface Window {
     snap: {
-      pay: (token: string) => void;
+      pay: (token: string, { onClose }: { onClose?: () => void }) => void;
     };
   }
 }
@@ -35,7 +36,7 @@ export default function DetailPage() {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+    script.src = process.env.NEXT_PUBLIC_MIDTRANS_SNAP_LOCATION!;
     script.setAttribute("data-client-key", process.env.MIDTRANS_CLIENT_KEY!);
     script.async = true;
 
@@ -85,8 +86,7 @@ export default function DetailPage() {
     const data = await res.json();
 
     if (res.status !== 201) {
-      // diganti dengan alert yg bagus nnti
-      alert(data.errors);
+      errorAlert(data.errors);
       return;
     }
 
@@ -104,10 +104,19 @@ export default function DetailPage() {
     });
 
     if (orderRes.status !== 200) {
-      alert("Data is not inserted into database, please contact developer");
+      errorAlert(
+        "Data is not inserted into database, please contact developer"
+      );
     }
 
-    window.snap.pay(data.data.token);
+    window.snap.pay(data.data.token, {
+      onClose: async function () {
+        await fetch(`/api/order/${data.order_id}`, {
+          cache: "no-store",
+          method: "DELETE",
+        });
+      },
+    });
 
     resetOrder();
     resetOrderCount();
@@ -129,8 +138,7 @@ export default function DetailPage() {
     const data = await res.json();
 
     if (res.status !== 201) {
-      // diganti dengan alert yg bagus nnti
-      alert(data.errors);
+      errorAlert(data.errors);
       return;
     }
 
@@ -148,10 +156,12 @@ export default function DetailPage() {
     });
 
     if (orderRes.status !== 200) {
-      alert("Data is not inserted into database, please contact developer");
+      errorAlert(
+        "Data is not inserted into database, please contact developer"
+      );
     }
 
-    alert("Pembayaran Sukses");
+    successAlert("Pembayaran Sukses");
 
     resetOrder();
     resetOrderCount();

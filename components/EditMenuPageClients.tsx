@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "./Loading";
 import InputForm from "./InputForm";
 import { useRouter } from "next/navigation";
+import { errorAlert } from "@/lib/sweetalert/alert";
 
 export default function EditMenuPageClient({ id }: { id: string }) {
   useRequireAuth();
@@ -34,7 +35,10 @@ export default function EditMenuPageClient({ id }: { id: string }) {
           price: res.data.price,
         })
       )
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => setIsLoadingFetchData(false));
   }, [id]);
 
@@ -57,7 +61,10 @@ export default function EditMenuPageClient({ id }: { id: string }) {
     })
       .then((res) => res.json())
       .then((res) => console.log(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => {
         setIsLoadingSubmitData(false);
         router.replace("/dashboard/menu");

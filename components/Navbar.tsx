@@ -1,19 +1,28 @@
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const res = await fetch("/api/logout", {
-      cache: "no-store",
-      method: "DELETE",
-      credentials: "include",
-    });
+    try {
+      const res = await fetch("/api/logout", {
+        cache: "no-store",
+        method: "DELETE",
+        credentials: "include",
+      });
 
-    if (res.status == 200) {
-      router.replace("/login");
-    } else {
-      alert("Cannot logout");
+      if (res.status == 200) {
+        router.replace("/login");
+      } else {
+        errorAlert("Cannot logout");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        errorAlert(error.message);
+      } else {
+        errorAlert(String(error));
+      }
     }
   };
 

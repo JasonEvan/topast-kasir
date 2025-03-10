@@ -5,6 +5,7 @@ import InputForm from "./InputForm";
 import { useEffect, useState } from "react";
 import Skeleton from "./Loading";
 import { useRouter } from "next/navigation";
+import { errorAlert } from "@/lib/sweetalert/alert";
 
 export default function EditAdminPageClient({ id }: { id: string }) {
   useRequireAuth();
@@ -31,7 +32,10 @@ export default function EditAdminPageClient({ id }: { id: string }) {
           isAdmin: res.data.isAdmin,
         })
       )
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => setIsLoadingFetchData(false));
   }, [id]);
 
@@ -46,7 +50,10 @@ export default function EditAdminPageClient({ id }: { id: string }) {
     })
       .then((res) => res.json())
       .then((res) => console.log(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => {
         setIsLoadingSubmitForm(false);
         router.replace("/dashboard/admin");

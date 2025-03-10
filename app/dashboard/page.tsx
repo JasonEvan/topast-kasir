@@ -4,6 +4,7 @@ import Skeleton from "@/components/Loading";
 import { useGetCurrentTime } from "@/hooks/useGetCurrentTime";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { formatter } from "@/lib/common/formatter";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
@@ -17,7 +18,10 @@ export default function DashboardPage() {
     })
       .then((res) => res.json())
       .then((res) => setPenjualan(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 

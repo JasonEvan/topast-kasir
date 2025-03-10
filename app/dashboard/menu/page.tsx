@@ -3,6 +3,7 @@
 import Skeleton from "@/components/Loading";
 import { MenuTable } from "@/components/Table";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { Menu } from "@/lib/types/type";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -18,7 +19,10 @@ export default function MenuPage() {
     })
       .then((res) => res.json())
       .then((res) => setMenus(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 

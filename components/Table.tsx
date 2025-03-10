@@ -1,4 +1,5 @@
 import { formatter } from "@/lib/common/formatter";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { Menu, User } from "@/lib/types/type";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,14 +16,19 @@ export function MenuTable({ menus }: { menus: Menu[] }) {
     fetch(`/api/menu/${id}`, {
       cache: "no-store",
       method: "DELETE",
-    }).then((res) => {
-      if (res.status == 200) {
-        alert("Berhasil delete");
-        router.refresh();
-      } else {
-        alert("Gagal delete");
-      }
-    });
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          alert("Berhasil delete");
+          router.refresh();
+        } else {
+          errorAlert("Gagal delete");
+        }
+      })
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      });
   };
 
   return (
@@ -120,14 +126,19 @@ export function AdminTable({ admins }: { admins: User[] }) {
     fetch(`/api/admin/${id}`, {
       cache: "no-store",
       method: "DELETE",
-    }).then((res) => {
-      if (res.status == 200) {
-        alert("Berhasil delete");
-        router.refresh();
-      } else {
-        alert("Gagal delete");
-      }
-    });
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          alert("Berhasil delete");
+          router.refresh();
+        } else {
+          errorAlert("Gagal delete");
+        }
+      })
+      .catch((err) => {
+        errorAlert(err);
+        console.error(err);
+      });
   };
 
   return (

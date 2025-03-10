@@ -2,6 +2,7 @@
 
 import InputForm from "@/components/InputForm";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { errorAlert } from "@/lib/sweetalert/alert";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -44,7 +45,11 @@ export default function AddMenuPage() {
       console.log(await res.json());
       router.replace("/dashboard/menu");
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        errorAlert(error.message);
+      } else {
+        errorAlert(String(error));
+      }
       return;
     } finally {
       setIsLoading(false);
