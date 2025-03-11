@@ -154,6 +154,14 @@ export async function getAdminById(id: string): Promise<User | null> {
   return null;
 }
 
+export async function getUserByEmail(email: string): Promise<User | null> {
+  const snapshots = await getDocs(collection(firestore, "users"));
+
+  const userDoc = snapshots.docs.find((doc) => doc.data().email === email);
+
+  return userDoc ? ({ id: userDoc.id, ...userDoc.data() } as User) : null;
+}
+
 export async function updateAdmin(
   id: string,
   data: { email: string; isAdmin: boolean }

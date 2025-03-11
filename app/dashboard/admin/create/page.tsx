@@ -1,6 +1,7 @@
 "use client";
 
 import InputForm from "@/components/InputForm";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { errorAlert } from "@/lib/sweetalert/alert";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { useState } from "react";
 
 export default function AddAdminPage() {
   useRequireAuth();
+  useAdminRequired();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<{

@@ -21,7 +21,7 @@ export default function InputForm({
       <input
         type={type ?? "text"}
         placeholder={`${placeholder ?? ""}`}
-        className="input input-bordered w-full max-w-xs text-white"
+        className="input input-bordered w-full max-w-xs text-white bg-slate-800"
         value={text}
         onChange={onChange}
       />

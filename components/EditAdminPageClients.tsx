@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import Skeleton from "./Loading";
 import { useRouter } from "next/navigation";
 import { errorAlert } from "@/lib/sweetalert/alert";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 
 export default function EditAdminPageClient({ id }: { id: string }) {
   useRequireAuth();
+  useAdminRequired();
   const router = useRouter();
   const [isLoadingSubmitForm, setIsLoadingSubmitForm] =
     useState<boolean>(false);

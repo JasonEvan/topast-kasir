@@ -1,11 +1,14 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useDataUser } from "@/hooks/useDataUserStore";
 import { errorAlert } from "@/lib/sweetalert/alert";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function LoginPage() {
+  const setIsAdmin = useDataUser((state) => state.setIsAdmin);
+  const setEmail = useDataUser((state) => state.setEmail);
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -36,6 +39,9 @@ export default function LoginPage() {
     });
 
     if (res.status == 200) {
+      const data = await res.json();
+      setEmail(data.data.email);
+      setIsAdmin(data.data.isAdmin);
       router.replace("/");
     } else {
       const response = await res.json();

@@ -2,6 +2,7 @@
 
 import Skeleton from "@/components/Loading";
 import { MenuTable } from "@/components/Table";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { errorAlert } from "@/lib/sweetalert/alert";
 import { Menu } from "@/lib/types/type";
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 
 export default function MenuPage() {
   useRequireAuth();
+  useAdminRequired();
   const [menus, setMenus] = useState<Menu[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

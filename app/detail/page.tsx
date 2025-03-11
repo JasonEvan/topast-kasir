@@ -27,6 +27,7 @@ export default function DetailPage() {
   const resetOrderCount = useCountOrder((state) => state.resetAll);
   const router = useRouter();
   const [customerName, setCustomerName] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (menus == null || menus.length < 1 || total === 0) {
@@ -71,6 +72,7 @@ export default function DetailPage() {
   };
 
   const handleDigitalPayment = async () => {
+    setIsLoading(true);
     const item_details = makeItemDetails(newMenus);
 
     const res = await fetch("/api/payment", {
@@ -120,9 +122,11 @@ export default function DetailPage() {
 
     resetOrder();
     resetOrderCount();
+    setIsLoading(false);
   };
 
   const handleCashPayment = async () => {
+    setIsLoading(true);
     const item_details = makeItemDetails(newMenus);
 
     const res = await fetch("/api/payment", {
@@ -165,6 +169,7 @@ export default function DetailPage() {
 
     resetOrder();
     resetOrderCount();
+    setIsLoading(false);
   };
 
   return (
@@ -182,12 +187,18 @@ export default function DetailPage() {
         onChange={(e) => setCustomerName(e.target.value)}
         otherClass="mt-7"
       />
-      <button className="btn btn-primary" onClick={handleDigitalPayment}>
-        Digital Payment
-      </button>
-      <button className="btn btn-primary" onClick={handleCashPayment}>
-        Cash
-      </button>
+      {!isLoading ? (
+        <>
+          <button className="btn btn-primary" onClick={handleDigitalPayment}>
+            Digital Payment
+          </button>
+          <button className="btn btn-primary" onClick={handleCashPayment}>
+            Cash
+          </button>
+        </>
+      ) : (
+        <span className="loading loading-spinner loading-xl"></span>
+      )}
     </div>
   );
 }

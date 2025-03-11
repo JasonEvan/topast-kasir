@@ -1,6 +1,7 @@
 "use client";
 
 import Skeleton from "@/components/Loading";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 import { useGetCurrentTime } from "@/hooks/useGetCurrentTime";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { formatter } from "@/lib/common/formatter";
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   useRequireAuth();
+  useAdminRequired();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { now } = useGetCurrentTime();
   const [penjualan, setPenjualan] = useState<number>(0);

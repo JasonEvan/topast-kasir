@@ -2,6 +2,7 @@
 
 import Skeleton from "@/components/Loading";
 import { AdminTable } from "@/components/Table";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { errorAlert } from "@/lib/sweetalert/alert";
 import { User } from "@/lib/types/type";
@@ -14,6 +15,7 @@ export default function AdminPage() {
     useState<boolean>(true);
 
   useRequireAuth();
+  useAdminRequired();
   useEffect(() => {
     fetch("/api/admin", {
       cache: "no-store",

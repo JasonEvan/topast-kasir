@@ -11,7 +11,7 @@ export default function Card({ menu }: { menu: Menu }) {
   const { countMenu, incMenu, decMenu } = useCountOrder();
 
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-slate-900 w-96 shadow-xl">
       <div className="flex justify-center h-full pt-5">
         {menu.imagePath != null && menu.imagePath != "" ? (
           <Image

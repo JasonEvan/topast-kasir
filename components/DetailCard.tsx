@@ -10,7 +10,7 @@ export default function DetailCard({
   quantity: number;
 }) {
   return (
-    <div className="w-full h-28 flex items-center px-5 bg-base-100 rounded-xl">
+    <div className="w-full h-28 flex items-center px-5 bg-slate-900 rounded-xl">
       <div className="relative lg:h-24 lg:w-32 md:h-24 md:w-32">
         {menu.imagePath != null && menu.imagePath != "" ? (
           <Image

@@ -6,9 +6,11 @@ import Skeleton from "./Loading";
 import InputForm from "./InputForm";
 import { useRouter } from "next/navigation";
 import { errorAlert } from "@/lib/sweetalert/alert";
+import { useAdminRequired } from "@/hooks/useAdminRequired";
 
 export default function EditMenuPageClient({ id }: { id: string }) {
   useRequireAuth();
+  useAdminRequired();
   const router = useRouter();
   const [isLoadingFetchData, setIsLoadingFetchData] = useState<boolean>(true);
   const [isLoadingSubmitData, setIsLoadingSubmitData] =
