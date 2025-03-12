@@ -19,3 +19,11 @@ export interface Order {
   price: number;
   quantity: number;
 }
+
+export interface OrderOnDatabase {
+  customer_name: string;
+  gross_amount: number;
+  item_details: Order[];
+  status: string;
+  created_at: string;
+}
